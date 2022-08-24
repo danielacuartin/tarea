@@ -1,25 +1,51 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [newItem, setNewItem] = useState("")
+  const [items, setItems] = useState([])
+
+ function addItem() {
+
+  if (!newItem) {alert("Escriba un item");
+return;}
+  console.log(newItem)
+  const item = {
+    id: Math.floor(Math.random() * 1000),
+    value: newItem
+  }
+  setItems(oldList => [...oldList, item])
+  setNewItem("")
+  console.log(items)
+ }
+
+function deleteItem(id) {
+  const newArray = items.filter(item => item.id !== id);
+setItems(newArray)}
+
+return (
+
+<div className='App'>
+
+<h1>To do list</h1>
+
+<input type="text" 
+
+placeholder='Add an item...'
+value={newItem}
+onChange={e => setNewItem(e.target.value)}/>
+ 
+<button onClick={() => addItem()}>Add</button>
+
+<ul>
+  {items.map(item => {
+  return(
+    <li key={item.id}>{item.value} <button className='delete-button' onClick={() => deleteItem(item.id)}> X </button></li>
+)})
+}</ul>
+</div>
+)
+
 }
 
 export default App;
